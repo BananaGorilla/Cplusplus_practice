@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -19,16 +20,16 @@ void assignCourseScore(courseAndScore* item, int courseNum, int* courseScore)
     }
 }
 
-float calcAvgScorePerSem(courseAndScore* item, int semIdx)
+float calcAvgScorePerSem(courseAndScore* item)
 {
     int totalScorePerSem = 0;
     float avgScore = 0.0;
-    for(int cnt = 0; cnt < item[semIdx].courseNum; cnt++)
+    for(int cnt = 0; cnt < item->courseNum; cnt++)
     {
-        totalScorePerSem = totalScorePerSem + item[semIdx].coursesScore[cnt];
+        totalScorePerSem = totalScorePerSem + item->coursesScore[cnt];
     }
-
-    avgScore = static_cast<float>(totalScorePerSem) / static_cast<float>(item[semIdx].courseNum);
+    
+    avgScore = static_cast<float>(totalScorePerSem) / static_cast<float>(item->courseNum);
 
     return avgScore;
 }
@@ -39,7 +40,7 @@ float calcCgpa(courseAndScore* item, int totalSemNum)
     float cgpa = 0.0;
     for(int cnt = 0; cnt < totalSemNum; cnt++)
     {
-        float semAvgScore = calcAvgScorePerSem(&item[cnt], cnt);
+        float semAvgScore = calcAvgScorePerSem(&item[cnt]);
         totalAvgScore = totalAvgScore + semAvgScore;
     }
 
@@ -76,7 +77,7 @@ int main(int argc, char* argv[])
     }
 
     float cgpa = calcCgpa(items, total_semester_num);
-    cout << "CGPA: " << cgpa;
+    cout << "CGPA: " << cgpa << setprecision(4);
 
     return 0;
 }
