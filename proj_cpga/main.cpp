@@ -74,10 +74,15 @@ int main(int argc, char* argv[])
             coursesScore[cnt2] = score;
         }
         assignCourseScore(&items[cnt], numCourses, coursesScore);
+        delete coursesScore;
+        coursesScore = nullptr;
     }
 
     float cgpa = calcCgpa(items, total_semester_num);
     cout << "CGPA: " << cgpa << setprecision(4);
+
+    delete items;
+    items = nullptr;
 
     return 0;
 }
