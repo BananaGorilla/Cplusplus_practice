@@ -16,7 +16,7 @@ typedef enum
 typedef struct
 {
     shape Shape;
-    char* string;
+    string String;
 } mapShapeToString;
 
 mapShapeToString lookupTbl[] =
@@ -48,13 +48,13 @@ int main(int argc, char* argv[])
     {
         if( ( lookupTbl[cnt].Shape == userChoice ) && ( !foundUserChoice ) )
         {
-            cout << "User chooses: " << lookupTbl[cnt].string << "\n";
+            cout << "User chooses: " << lookupTbl[cnt].String << "\n";
             foundUserChoice = true;
         }
 
         if( ( lookupTbl[cnt].Shape == computerChoice ) && ( !foundCompChoice ) )
         {
-            cout << "Computer chooses: " << lookupTbl[cnt].string << "\n";
+            cout << "Computer chooses: " << lookupTbl[cnt].String << "\n";
             foundCompChoice = true;
         }
     }
@@ -64,23 +64,36 @@ int main(int argc, char* argv[])
     // if the delta is 1, then the bigger number wins
     // else if the delta is 2, then it is rock vs scissor and larger number lost
     int delta = static_cast<int>(abs(userChoice - computerChoice));
-    cout << delta << "\n";
 
     int largerNum = static_cast<int>(max(userChoice, computerChoice));
-    char* largerChar;
-    memcpy( largerChar, lookupTbl[largerNum].string, strlen(lookupTbl[largerNum].string) );
-
+    char* largerChar = new char[lookupTbl[largerNum].String.length() + 1];
+    strcpy( largerChar, (lookupTbl[largerNum].String).c_str() );
+    
     int smallerNum = static_cast<int>(max(userChoice, computerChoice));
-    char* smallerChar;
-    memcpy( smallerChar, lookupTbl[smallerNum].string, strlen(lookupTbl[smallerNum].string) );
+    char* smallerChar = new char[lookupTbl[smallerNum].String.length() + 1];
+    strcpy( smallerChar, (lookupTbl[smallerNum].String).c_str() );
 
     if( 1 == delta )
     {
-        cout << "The winner is " << largerChar << "\n";
+        if( userChoice > computerChoice )
+        {
+            cout << "The winner is user. User chooses " << largerChar << "\n";
+        }
+        else
+        {
+            cout << "The winner is computer. Computer chooses " << largerChar << "\n";
+        }
     }
     else if( 2 == delta )
     {
-        cout << "The winner is " << smallerChar << "\n";
+        if( userChoice > computerChoice )
+        {
+            cout << "The winner is computer. Computer chooses " << smallerChar << "\n";
+        }
+        else
+        {
+            cout << "The winner is user. User chooses " << smallerChar << "\n";
+        }
     }
     else if( 0 == delta )
     {
